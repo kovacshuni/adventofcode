@@ -1,37 +1,40 @@
 require 'digest'
 
-def starts_with_00000(hash)
-  first5 = hash.to_s[0..4]
-  # puts first5
-  hash.to_s[0..4] == "00000"
+def vowel(s)
+  s.count("aeiou") >= 3
 end
 
-def starts_with_000000(hash)
-  first5 = hash.to_s[0..5]
-  # puts first5
-  hash.to_s[0..5] == "000000"
+def double(s)
+  i = 0
+  while i < s.length - 1 do
+   if (s[i] == s[i + 1])
+     return true
+   end
+   i += 1
+  end
+  return false
 end
 
-def hash_it(base, n)
-  key = base.to_s + n.to_s
-  hash = Digest::MD5.hexdigest(key)
-  return hash
+def forbidden(s)
+  f = ["ab", "cd", "pq", "xy"]
+  f.each do |w|
+    unless s[w].nil?
+      return false
+    end
+  end
+  return true
 end
 
 File.open("paranthesis.txt", "r") do |f|
+  nice = 0
   f.each_line do |line|
-    i = 0
-    hash = 0
-    begin 
-      hash = hash_it(line, i)
-      # puts hash
-      i += 1
-    end while (!starts_with_000000(hash))
-    puts i - 1
-    puts hash
+    l = line[0..line.length-2]
+    # puts "%s vowel %s" % [l, vowel(line)]
+    # puts "%s double %s" % [l, double(line)]
+    # puts "%s forbidden %s" % [l, forbidden(line)]
+    if vowel(l) && double(l) && forbidden(l)
+      nice += 1
+    end
   end
+  puts nice
 end
-
-puts hash_it("pqrstuv", 1048970)
-puts hash_it("abcdef", 609043)
-# && i < 10
