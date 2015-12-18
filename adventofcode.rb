@@ -56,10 +56,14 @@ class Lights
   
 end
 
-File.open("paranthesis.txt", "r") do |f|
-  lights = Lights.new(1000)
+File.open("adventofcode-input.txt", "r") do |f|
   f.each_line do |line|
-    matchdata = /(turn on|turn off|toggle) (\d+),(\d+) through (\d+),(\d+)/.match(line)  
+    direct_matchdata = /(\d+) -> (\w+)/.match(line)
+    binary_matchdata = /(\w+) (AND|OR) (\w+) -> (\w+)/.match(line)
+    shift_matchdata = /(\w+) (LSHIFT|RSHIFT) (\d+) -> (\w+)/.match(line)
+    not_matchdata = /NOT (\w+) -> (\w+)/.match(line)
+    
+    
     case matchdata[1]
       when "turn on"
         lights.turn_on(matchdata[2].to_i, matchdata[3].to_i, matchdata[4].to_i, matchdata[5].to_i)
