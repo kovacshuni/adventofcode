@@ -87,7 +87,6 @@ x RSHIFT 2 -> y
 fq OR fr -> fs
 bn RSHIFT 5 -> bq
 0 -> c
-14146 -> b
 d OR j -> k
 z OR aa -> ab
 gf OR ge -> gg
@@ -337,3 +336,4 @@ o AND q -> r
 NOT p -> q
 k AND m -> n
 as RSHIFT 2 -> at
+956 -> b
