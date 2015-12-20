@@ -29,6 +29,7 @@ citiesa.permutation.to_a.each do |route|
 end
 
 puts mins.min
+puts mins.max
 
 # cities.each do |c1|
 #   min = 255
