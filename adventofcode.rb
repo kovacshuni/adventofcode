@@ -1,48 +1,27 @@
-require 'set'
 
-distances = Hash.new
-cities = Set.new
+def look_and_say(a)
+  n = 1
+  res = Array.new
+  for i in 0..a.length
+    if a[i+1] == a[i]
+      n += 1
+    else
+      res << n
+      res << a[i]
+      n = 1
+    end
+  end
+  res
+end
 
 File.open("adventofcode-input.txt", "r") do |f|
   f.each_line do |line|
     line = line.chomp
-    matchdata = line.match(/(\w+) to (\w+) = (\d+)/)
-    # puts "%s - %s = %d" % [matchdata[1], matchdata[2], matchdata[3]]
-    cities << matchdata[1]
-    cities << matchdata[2]
-    ab = [ matchdata[1], matchdata[2] ]
-    ba = [ matchdata[2], matchdata[1] ]
-    distances[ab] = matchdata[3].to_i
-    distances[ba] = matchdata[3].to_i
+    a = line.split("").map{|c| c.to_i}
+    for i in 1..50
+      t1 = Time.now.to_i
+      a = look_and_say(a)
+      puts "%d. iteration calculated in %ds. Length was %d." % [i, Time.now.to_i - t1, a.length]
+    end
   end
 end
-
-
-citiesa = cities.to_a
-mins = Array.new
-citiesa.permutation.to_a.each do |route|
-  s = 0
-  for i in 0..route.length - 2
-    s += distances[[route[i], route[i+1]]]
-  end
-  mins << s
-end
-
-puts mins.min
-puts mins.max
-
-# cities.each do |c1|
-#   min = 255
-#   started = false
-#   cities.each do |c2|
-#     unless started
-#       min = distances[[c1, c2]]
-#     end
-#     if c1 != c2
-#       if distances[[c1, c2]] < min
-#         min = distances[[c1, c2]]
-#       end
-#     end
-#   end
-#   puts "shortest from %s is %d" % [c1, min] 
-# end
